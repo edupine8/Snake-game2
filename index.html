@@ -923,10 +923,45 @@
         }
         setMode('1p');
 
+        function autoFitDimensions() {
+            // Calculate max cells that can fit on screen
+            // Leave ~160px vertical margin for the UI (HUD, game over title, etc)
+            // Leave ~40px horizontal margin for borders/glow
+            const availableW = window.innerWidth - 40;
+            const availableH = window.innerHeight - 160;
+
+            const maxC = Math.floor(availableW / CELL);
+            const maxR = Math.floor(availableH / CELL);
+
+            // Default to 30x20, but clamp to the max screen dimensions
+            const defaultW = Math.min(30, maxC);
+            const defaultH = Math.min(20, maxR);
+
+            // Ensure we don't drop below the absolute minimums
+            inputW.value = Math.max(10, defaultW);
+            inputH.value = Math.max(8, defaultH);
+        }
+
+        // Run on load and on device orientation change
+        autoFitDimensions();
+        window.addEventListener('resize', () => {
+            if (setupScreen.style.display !== 'none') autoFitDimensions();
+        });
+
         document.getElementById('btn-start').addEventListener('click', () => {
             initAudio();
             const w = Math.max(10, Math.min(60, parseInt(inputW.value) || 30));
             const h = Math.max(8, Math.min(40, parseInt(inputH.value) || 20));
+
+            // Warning Check
+            const requiredWidth = w * CELL + 40;
+            const requiredHeight = h * CELL + 160;
+
+            if (requiredWidth > window.innerWidth || requiredHeight > window.innerHeight) {
+                const proceed = window.confirm(`Warning: The selected board size (${w}x${h}) is larger than your screen resolution. This may make the game difficult to play on mobile. \n\nDo you want to continue anyway?`);
+                if (!proceed) return;
+            }
+
             startGame(w, h, selectedSpeed, selectedMode);
         });
 
