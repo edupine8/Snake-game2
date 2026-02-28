@@ -42,11 +42,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            touch-action: none;
-            /* Prevent scroll on mobile */
-            user-select: none;
-            /* Prevent selection on mobile */
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 1rem 0;
         }
 
         /* ── Scanline overlay ── */
@@ -860,7 +858,7 @@
         //  GAME STATE
         // ═══════════════════════════════════════════════════════
         let cols, rows, baseSpeed, gameMode;
-        let gameState;   // 'countdown' | 'running' | 'paused' | 'dead'
+        let gameState = 'idle';   // 'idle' | 'countdown' | 'running' | 'paused' | 'dead'
         let loopId;
         let food, redFood;
         let foodPulse = 0;
