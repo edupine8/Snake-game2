@@ -1031,7 +1031,7 @@
             const p1Hint = document.getElementById('p1-hint');
             const p2Hint = document.getElementById('p2-hint-text');
             if (isTouch) {
-                p1Hint.innerHTML = gameMode === '2p' ? 'SWIPE LEFT HALF' : 'SWIPE TO MOVE';
+                p1Hint.innerHTML = gameMode === '2p' ? 'SWIPE LEFT | TAP 2 PAUSE' : 'TAP 2 PAUSE | SWIPE 2 MOVE';
                 if (p2Hint) p2Hint.innerHTML = 'SWIPE RIGHT HALF';
             } else {
                 p1Hint.innerHTML = 'P&thinsp;pause &nbsp;·&nbsp; R&thinsp;restart';
